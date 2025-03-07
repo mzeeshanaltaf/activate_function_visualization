@@ -1,35 +1,44 @@
 import numpy as np
+import streamlit as st
 
+@st.cache_data
 # Define activation functions and their derivatives
 def sigmoid(x):
     """Sigmoid activation function"""
     return 1 / (1 + np.exp(-x))
 
+@st.cache_data
 def sigmoid_derivative(x):
     """Derivative of sigmoid activation function"""
     sig = sigmoid(x)
     return sig * (1 - sig)
 
+@st.cache_data
 def tanh(x):
     """Hyperbolic tangent activation function"""
     return np.tanh(x)
 
+@st.cache_data
 def tanh_derivative(x):
     """Derivative of hyperbolic tangent activation function"""
     return 1 - np.tanh(x)**2
 
+@st.cache_data
 def relu(x):
     """ReLU activation function"""
     return np.maximum(0, x)
 
+@st.cache_data
 def relu_derivative(x):
     """Derivative of ReLU activation function"""
     return np.where(x > 0, 1, 0)
 
+@st.cache_data
 def gelu(x):
     """Gaussian Error Linear Unit (GELU) activation function"""
     return 0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
 
+@st.cache_data
 def gelu_derivative(x):
     """Approximate derivative of GELU activation function"""
     # Approximation
@@ -37,6 +46,7 @@ def gelu_derivative(x):
     pdf = np.exp(-(x**2) / 2) / np.sqrt(2 * np.pi)
     return cdf + x * pdf
 
+@st.cache_data
 def swiglu(x):
     """SwiGLU activation function (simplified for 1D)"""
     # For simplicity, we'll use the same input for both parts
@@ -44,18 +54,21 @@ def swiglu(x):
     beta = 1.0  # Default beta value
     return x * sigmoid(beta * x)
 
+@st.cache_data
 def swiglu_derivative(x):
     """Approximate derivative of SwiGLU activation function (simplified for 1D)"""
     beta = 1.0
     sig = sigmoid(beta * x)
     return sig + x * beta * sig * (1 - sig)
 
+@st.cache_data
 def softmax(x):
     """Softmax activation function (simplified for 1D visualization)"""
     # For visualization purposes, we'll just show a shifted exponential
     # since proper softmax requires multiple inputs
     return np.exp(x) / (1 + np.exp(x))
 
+@st.cache_data
 def softmax_derivative(x):
     """Simplified derivative of softmax (just for visualization)"""
     # This is a simplification for visualization
@@ -66,7 +79,7 @@ def softmax_derivative(x):
 # Sigmoid
 sigmoid_function_label = 'Function: $\\sigma(x) = \\frac{1}{1 + e^{-x}}$'
 sigmoid_derivative_label = 'Derivative: $\\sigma\'(x) = \\sigma(x)(1 - \\sigma(x))$'
-sigmoid_key_characteristics = """
+sigmoid_key_characteristics = r"""
 1. **S-shaped Curve (Non-linear)** 📈  
    - Maps input values to a smooth "S"-shaped curve between **0 and 1**.
 2. **Output Range:** 🌡️  
