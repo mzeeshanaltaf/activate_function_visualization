@@ -84,6 +84,12 @@ def more_info_dialog(title):
     st.write("**Key Characteristics:** ", all_activation_functions[title]["key_characteristics"])
     st.write("**Common Use Cases:** ", all_activation_functions[title]["use_cases"])
 
+# Using st.fragment will only rerun this function instead of whole application
+@st.fragment
+def show_dialog_box(selection, num):
+    if st.button('More Info', key=f"info_{num}", use_container_width=True, icon=":material/description:"):
+        more_info_dialog(selection)
+
 def display_footer():
     footer = """
     <style>

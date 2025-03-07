@@ -39,8 +39,8 @@ else:
                     with col:
                         fig = create_activation_plot(selection[i+j], plot_derivative)
                         st.pyplot(fig)
-                        if st.button('More Info', key=f"info_{i+j}", use_container_width=True, icon=":material/description:"):
-                            more_info_dialog(selection[i+j])
+                        show_dialog_box(selection[i+j], i+j)
+
 
 
 

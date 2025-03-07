@@ -101,7 +101,7 @@ sigmoid_use_cases = """
 # Tanh
 tanh_function_label = 'Function: $\\tanh(x) = \\frac{e^x - e^{-x}}{e^x + e^{-x}}$'
 tanh_derivative_label = 'Derivative: $\\tanh\'(x) = 1 - \\tanh^2(x)$'
-tanh_key_characteristics = """
+tanh_key_characteristics = r"""
 1. **S-shaped Curve (Non-linear)** 📈 
    - Similar to Sigmoid but symmetric around zero.
 2. **Output Range:** 🌡️  
@@ -122,16 +122,12 @@ relu_derivative_label = r"Derivative: $ReLU'(x) = \{ 1 \text{ if } x > 0, 0 \tex
 relu_key_characteristics = """
 1. **Piecewise Linear & Non-linear** 🔀  
    - Outputs **0** for negative inputs and **x** for positive inputs.
-
 2. **Output Range:** 🌡️  
    - Outputs values in the range **[0, ∞)**.
-
 3. **Zero-centered Output?** ❌  
    - No, all negative inputs become **zero**, which may cause **dying ReLU** problem.
-
 4. **No Vanishing Gradient Issue for Positive Inputs:** 🚀  
    - Unlike Sigmoid/Tanh, **no gradient vanishing for positive values**.
-
 5. **Dying ReLU Problem:** ⚠️  
    - For negative inputs, gradient is **zero**, meaning neurons can become inactive.
 """
@@ -146,13 +142,10 @@ gelu_derivative_label = 'Derivative: $GELU\'(x) = \\Phi(x) + x \\phi(x)$, where 
 gelu_key_characteristics = """
 1. **Smooth & Non-linear** 🔄  
    - Unlike ReLU, GELU smoothly **weights** input values instead of cutting them off.
-
 2. **Output Range:** 🌡️  
    - Values range between **(-∞, ∞)**, making it **zero-centered**.
-
 3. **Better than ReLU?** ✅  
    - Provides **smoother activation** and avoids sharp transitions like ReLU.
-
 4. **Probabilistic Interpretation:** 🎲  
    - Uses **Gaussian Distribution** to determine activation.
 """
@@ -167,13 +160,10 @@ swiglu_derivative_label = 'Derivative: Complex and involves product and chain ru
 swiglu_key_characteristics = """
 1. **Combination of Swish & Gating Mechanism** 🔄  
    - Uses **Swish activation** and a **gated linear unit (GLU)** for better feature selection.
-
 2. **Smooth & Non-linear** ✅  
    - Unlike ReLU, it does not abruptly cut off negative values.
-
 3. **Element-wise Multiplication** ✖️  
    - Combines two transformed inputs, enhancing expressiveness.
-
 4. **Better than ReLU?** 🚀  
    - Achieves **better performance** in Transformers and NLP models.
 """
