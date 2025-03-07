@@ -33,12 +33,14 @@ else:
         num_plots = len(selection)
         max_cols = 3
         for i in range(0, num_plots, max_cols):
-            cols = st.columns(min(max_cols, num_plots - i))
+            cols = st.columns(min(max_cols, num_plots - i), border=True)
             for j, col in enumerate(cols):
                 if i + j < num_plots:
                     with col:
                         fig = create_activation_plot(selection[i+j], plot_derivative)
                         st.pyplot(fig)
+                        if st.button('More Info', key=f"info_{i+j}", use_container_width=True, icon=":material/description:"):
+                            more_info_dialog(selection[i+j])
 
 
 

@@ -1,103 +1,7 @@
 import streamlit as st
-import numpy as np
 import matplotlib.pyplot as plt
-
-
-# Define activation functions and their derivatives
-def sigmoid(x):
-    """Sigmoid activation function"""
-    return 1 / (1 + np.exp(-x))
-
-def sigmoid_derivative(x):
-    """Derivative of sigmoid activation function"""
-    sig = sigmoid(x)
-    return sig * (1 - sig)
-
-def tanh(x):
-    """Hyperbolic tangent activation function"""
-    return np.tanh(x)
-
-def tanh_derivative(x):
-    """Derivative of hyperbolic tangent activation function"""
-    return 1 - np.tanh(x)**2
-
-def relu(x):
-    """ReLU activation function"""
-    return np.maximum(0, x)
-
-def relu_derivative(x):
-    """Derivative of ReLU activation function"""
-    return np.where(x > 0, 1, 0)
-
-def gelu(x):
-    """Gaussian Error Linear Unit (GELU) activation function"""
-    return 0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
-
-def gelu_derivative(x):
-    """Approximate derivative of GELU activation function"""
-    # Approximation
-    cdf = 0.5 * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
-    pdf = np.exp(-(x**2) / 2) / np.sqrt(2 * np.pi)
-    return cdf + x * pdf
-
-def swiglu(x):
-    """SwiGLU activation function (simplified for 1D)"""
-    # For simplicity, we'll use the same input for both parts
-    # SwiGLU(x,y) = x * sigmoid(beta * y)
-    beta = 1.0  # Default beta value
-    return x * sigmoid(beta * x)
-
-def swiglu_derivative(x):
-    """Approximate derivative of SwiGLU activation function (simplified for 1D)"""
-    beta = 1.0
-    sig = sigmoid(beta * x)
-    return sig + x * beta * sig * (1 - sig)
-
-def softmax(x):
-    """Softmax activation function (simplified for 1D visualization)"""
-    # For visualization purposes, we'll just show a shifted exponential
-    # since proper softmax requires multiple inputs
-    return np.exp(x) / (1 + np.exp(x))
-
-def softmax_derivative(x):
-    """Simplified derivative of softmax (just for visualization)"""
-    # This is a simplification for visualization
-    soft = softmax(x)
-    return soft * (1 - soft)
-
-# Sigmoid
-sigmoid_function_label = 'Sigmoid: $\\sigma(x) = \\frac{1}{1 + e^{-x}}$'
-sigmoid_derivative_label = 'Sigmoid Derivative: $\\sigma\'(x) = \\sigma(x)(1 - \\sigma(x))$'
-
-# Tanh
-tanh_function_label = 'Tanh: $\\tanh(x) = \\frac{e^x - e^{-x}}{e^x + e^{-x}}$'
-tanh_derivative_label = 'Tanh Derivative: $\\tanh\'(x) = 1 - \\tanh^2(x)$'
-
-# ReLU
-relu_function_label = 'ReLU: $ReLU(x) = \\max(0, x)$'
-relu_derivative_label = r"ReLU Derivative: $ReLU'(x) = \{ 1 \text{ if } x > 0, 0 \text{ otherwise } \}$"
-
-# GELU
-gelu_function_label = 'GELU: $GELU(x) = x \\Phi(x)$, where $\\Phi(x) = \\frac{1}{2} \\left(1 + \\text{erf} \\left( \\frac{x}{\\sqrt{2}} \\right) \\right)$'
-gelu_derivative_label = 'GELU Derivative: $GELU\'(x) = \\Phi(x) + x \\phi(x)$, where $\\phi(x) = \\frac{e^{-x^2/2}}{\\sqrt{2\\pi}}$'
-
-# SwiGLU
-swiglu_function_label = 'SwiGLU: $SwiGLU(x) = \\text{Swish}(x W_1) \\cdot (x W_2)$, where $\\text{Swish}(x) = x \\sigma(x)$'
-swiglu_derivative_label = 'SwiGLU Derivative: Complex and involves product and chain rule'
-
-# Softmax
-softmax_function_label = 'Softmax: $\\text{Softmax}(x_i) = \\frac{e^{x_i}}{\\sum_{j} e^{x_j}}$'
-softmax_derivative_label = 'Softmax Derivative: $\\frac{\\partial \\text{Softmax}(x_i)}{\\partial x_j} = \\text{Softmax}(x_i) (\\delta_{ij} - \\text{Softmax}(x_j))$'
-
-
-all_activation_functions = {
-    "Sigmoid": {"function": sigmoid, "derivative": sigmoid_derivative, "label_function":sigmoid_function_label, "label_derivative":sigmoid_derivative_label},
-    "Tanh": {"function": tanh, "derivative": tanh_derivative, "label_function":tanh_function_label, "label_derivative":tanh_derivative_label},
-    "ReLU": {"function": relu, "derivative": relu_derivative, "label_function":relu_function_label, "label_derivative": relu_derivative_label},
-    "GELU": {"function": gelu, "derivative": gelu_derivative, "label_function":gelu_function_label, "label_derivative":gelu_derivative_label},
-    "SwiGLU": {"function": swiglu, "derivative": swiglu_derivative, "label_function":swiglu_function_label, "label_derivative":swiglu_derivative_label},
-    "Softmax": {"function": softmax, "derivative": softmax_derivative, "label_function":softmax_function_label, "label_derivative":softmax_derivative_label}
-}
+import numpy as np
+from activation_functions import *
 
 def create_activation_plot(title, plot_derivative):
     """
@@ -170,6 +74,14 @@ def create_activation_plot(title, plot_derivative):
 
     plt.tight_layout()
     return fig
+
+@st.dialog("About Activation Function", width='large')
+def more_info_dialog(title):
+    st.write("**Name:** ", "$"+f"{title}"+"$")
+    st.write("**Formula:** ", all_activation_functions[title]["label_function"].split(":")[-1])
+    st.write("**Derivative:** ", all_activation_functions[title]["label_derivative"].split(":")[-1])
+    st.write("**Key Characteristics:** ", all_activation_functions[title]["key_characteristics"])
+    st.write("**Common Use Cases:** ", all_activation_functions[title]["use_cases"])
 
 def display_footer():
     footer = """

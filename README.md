@@ -28,3 +28,4 @@ You must have Python 3.11 or later installed.
 # Screen Shots
 ![img.png](screenshots/img.png)
 ![img_1.png](screenshots/img_1.png)
+![img_2.png](screenshots/img_2.png)
