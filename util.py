@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from activation_functions import *
 
+@st.cache_resource
 def create_activation_plot(title, plot_derivative):
     """
     Create a plot of an activation function and its derivative
