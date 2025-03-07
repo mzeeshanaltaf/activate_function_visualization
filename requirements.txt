@@ -1,3 +1,4 @@
 streamlit
 email-validator
 captcha
+matplotlib

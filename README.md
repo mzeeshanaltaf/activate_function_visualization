@@ -7,7 +7,7 @@ they shape deep learning models. Enhance your AI intuition with dynamic visualiz
 and AI enthusiasts! 🚀🔍
 
 # Application Link
--
+https://nn-activations.streamlit.app/
 
 # Technologies Used
 * Streamlit -- Front end development
